@@ -1,0 +1,24 @@
+{
+  "name": "clichat.js",
+  "version": "1.0.0",
+  "description": "CLIChat API Wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/sudocode1/clichat.js"
+  },
+  "keywords": [
+    "clichat",
+    "apiwrapper",
+    "cli"
+  ],
+  "author": "sudocode1",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "events": "^3.3.0",
+    "ws": "^7.4.4"
+  }
+}
