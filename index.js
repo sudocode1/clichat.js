@@ -13,11 +13,13 @@ exports.Client = class extends EventEmitter {
     /**
      * Create Bot Client
      * @constructor
-     * @param {string} server - The server IP
-     * @param {string} username - Bot username
+     * @param {string} server - The server IP.
+     * @param {string} username - Bot username.
+     * @param {boolean} secure - Whether the sever is secure or not.
+     * @param {string} token - If the server is secure, you will require a token provided from the server owner.
      *
      */ 
-    constructor(server, username) {
+    constructor(server = "localhost:90", username = "bot name", secure = false, token = "SOME_TOKEN") {
         super();
         this.server = 'ws://' + server;
         this.username = username;
@@ -25,6 +27,9 @@ exports.Client = class extends EventEmitter {
         this.ws = new ws(this.server);
         this.open = new Promise(r => this.ws.onopen = r);
         this.id;
+
+        this.secure = secure;
+        this.token = token;
 
         this.handlers = {
             message: (username, content) => {
@@ -59,7 +64,11 @@ exports.Client = class extends EventEmitter {
      */
     async login() {
         await this.open;
-        this.ws.send(JSON.stringify([ 'auth', { ip: null, username: this.username } ]));
+        if (this.secure == false) {
+            this.ws.send(JSON.stringify([ 'auth', { ip: null, username: this.username } ]));
+        } else {
+            this.ws.send(JSON.stringify([ 'auth', { ip: null, username: this.username, token: this.token } ]));
+        }
     }
 
     /**
